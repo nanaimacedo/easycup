@@ -1,199 +1,337 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Trophy, Users, Shield, Clock, Award, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Trophy, Users, Shield, Clock, Award, AlertTriangle, DollarSign, Percent, UserCheck, Swords, Medal } from 'lucide-react';
 
 export default function RegulamentoPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
       <Link href="/torneio" className="inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] mb-6 transition-colors">
-        <ArrowLeft className="w-4 h-4" /> Voltar
+        <ArrowLeft className="w-4 h-4" /> Voltar ao Torneio
       </Link>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-[var(--color-border)] overflow-hidden">
-        <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] p-6">
-          <div className="flex items-center gap-3">
-            <BookOpen className="w-8 h-8 text-white" />
-            <div>
-              <h1 className="text-2xl font-bold text-white">Regulamento</h1>
-              <p className="text-blue-100 text-sm">78º Campeonato Intercolonial de Tênis - 2026</p>
-            </div>
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary-dark)] to-blue-950 rounded-2xl p-8 sm:p-10 mb-8 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl" />
+        </div>
+        <div className="relative flex items-center gap-4">
+          <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+            <BookOpen className="w-7 h-7" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-extrabold">Regulamento Oficial</h1>
+            <p className="text-blue-200 mt-1">78º Campeonato Intercolonial de Tênis - 2026</p>
+            <p className="text-blue-300 text-xs mt-1">Coopercotia Atlético Clube - Departamento de Tênis</p>
           </div>
         </div>
+      </div>
 
-        <div className="p-6 space-y-8">
-          {/* Informações Gerais */}
-          <Section icon={<Trophy className="w-5 h-5" />} title="Informações Gerais">
-            <p>O Campeonato Intercolonial de Tênis é um torneio destinado predominantemente aos tenistas descendentes da Colônia Japonesa. O torneio tem como sede o Coopercotia Atlético Clube.</p>
-            <ul className="space-y-2 mt-3">
-              <li><strong>Início:</strong> 04 e 05 de julho de 2026 (Capital e cidades num raio de até 150 km)</li>
-              <li><strong>Continuidade:</strong> 10, 11 e 12 de julho de 2026 (todos os participantes)</li>
-              <li><strong>Prazo de inscrição:</strong> 12 de junho de 2026</li>
-            </ul>
-          </Section>
+      {/* Info Geral - Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <InfoCard icon={<Clock className="w-5 h-5" />} label="1ª Fase" value="04 e 05/07/2026" sublabel="Capital e raio de 150 km" color="blue" />
+        <InfoCard icon={<Clock className="w-5 h-5" />} label="2ª Fase" value="10, 11 e 12/07/2026" sublabel="Todos os participantes" color="blue" />
+        <InfoCard icon={<AlertTriangle className="w-5 h-5" />} label="Prazo de Inscrição" value="12/06/2026" sublabel="Improrrogável" color="red" />
+      </div>
 
-          {/* Regras Gerais */}
-          <Section icon={<Shield className="w-5 h-5" />} title="1. Regras Gerais">
-            <ul className="space-y-2">
-              <li>1.1 - O prazo de inscrição se encerra no dia <strong>12 de junho de 2026</strong>.</li>
-              <li>1.2 - Cada tenista poderá se inscrever em no máximo <strong>2 categorias</strong>, desde que não seja em duas categorias por equipe.</li>
-              <li>1.3 - Será permitida apenas uma única restrição de horário, apenas nas categorias Simples e Duplas.</li>
-              <li>1.4 - As equipes inscritas deverão informar os nomes dos jogadores até 12/06/2026.</li>
-              <li>1.5 - A Comissão Técnica reserva-se no direito de transferir jogadores e/ou equipes para outras categorias de acordo com o nível técnico.</li>
-              <li>1.6 - Todos os jogos de <strong>Repescagem</strong> serão disputados em um Set Profissional (até 8 games) com NO-AD.</li>
-              <li>1.7 - Nas categorias por Equipe, será permitida a participação de 1 atleta não Nikkei por equipe.</li>
-              <li>1.8 - Nas categorias Duplas, será permitida a participação de 1 atleta não Nikkei/não descendente cônjuge de pessoa de ascendência japonesa.</li>
-              <li>1.9 - As partidas serão regidas segundo as regras do Desporto Tênis, supervisionadas por árbitros credenciados pela ITF/CBT/FPT.</li>
-              <li>1.10 - Atitudes antidesportivas podem resultar em suspensão de até 2 anos. Havendo reincidência, banimento do torneio.</li>
-            </ul>
-          </Section>
-
-          {/* Premiação */}
-          <Section icon={<Award className="w-5 h-5" />} title="Premiação">
-            <ul className="space-y-2">
-              <li>Medalhas aos campeões, vice-campeões e campeões da repescagem de cada categoria.</li>
-              <li className="font-semibold">Premiação Especial (Simples Masculino e Feminino Especial):</li>
-              <li className="ml-4">Campeão(ã): <strong>R$ 2.000,00</strong></li>
-              <li className="ml-4">Vice: <strong>R$ 1.000,00</strong></li>
-              <li className="ml-4">Semifinalistas: <strong>R$ 500,00</strong></li>
-            </ul>
-          </Section>
-
-          {/* Categorias Simples */}
-          <Section icon={<Users className="w-5 h-5" />} title="2. Categorias">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold text-[var(--color-text)] mb-2">Simples Masculino</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>Especial - Professores, Profissionais, Ex-Profissionais e 1ª Classes</li>
-                  <li>A - 1ª e 2ª Classes</li>
-                  <li>B - 3ª e 4ª Classes</li>
-                  <li>C - 5ª Classe e Principiantes/Estreantes</li>
-                  <li>Mirim - até 12 anos (com Repescagem)</li>
-                  <li>Infantil - até 15 anos (com Repescagem)</li>
-                  <li>Juvenil - até 18 anos (com Repescagem)</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-[var(--color-text)] mb-2">Simples Feminino</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>Especial - Professoras, Profissionais, Ex-Profissionais e 1ª Classes</li>
-                  <li>A - 1ª e 2ª Classes</li>
-                  <li>B - 3ª e 4ª Classes</li>
-                  <li>C - Principiantes/Estreantes</li>
-                  <li>Mirim - até 12 anos (com Repescagem)</li>
-                  <li>Infantil - até 15 anos (com Repescagem)</li>
-                  <li>Juvenil - até 18 anos (com Repescagem)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-              <div>
-                <h4 className="font-semibold text-[var(--color-text)] mb-2">Duplas Masculino / Feminino</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>A, B e C (com Repescagem)</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-[var(--color-text)] mb-2">Equipes</h4>
-                <ul className="space-y-1 text-sm">
-                  <li>Dupla Masculino: Especial, A, B, C</li>
-                  <li>Dupla Feminino: A, B, C</li>
-                  <li>Dupla Mista Super: M60/F50, M65/F55, M70/F60, M75/F65</li>
-                  <li>Mista Livre: A, B, C</li>
-                </ul>
-              </div>
-            </div>
-          </Section>
-
-          {/* Jogos */}
-          <Section icon={<Clock className="w-5 h-5" />} title="3. Formato dos Jogos">
-            <ul className="space-y-2">
-              <li><strong>Simples e Duplas (Especial, A, B, C):</strong> Melhor de 3 sets, sistema NO-AD. Empate 6×6: tie-break normal. Empate em sets: super tie-break (até 10).</li>
-              <li><strong>Mirim, Infantil, Juvenil:</strong> Mesmo formato. Repescagem em Set Profissional (até 8 games) NO-AD.</li>
-              <li><strong>Equipes:</strong> 3 jogos de duplas por confronto. Súmula apresentada 30 min antes. A súmula não pode ser alterada.</li>
-              <li><strong>Dupla Mista (NO-AD):</strong> Sacador e recebedor devem ser do mesmo sexo.</li>
-            </ul>
-          </Section>
-
-          {/* Equipes - Composição */}
-          <Section icon={<Users className="w-5 h-5" />} title="4. Composição das Equipes">
-            <ul className="space-y-2">
-              <li>Mínimo 4, máximo 8 jogadores por equipe.</li>
-              <li>Máximo 1 integrante não Nikkei por equipe.</li>
-              <li><strong>Cat. C e B:</strong> Não é permitido professor/profissional de tênis.</li>
-              <li><strong>Cat. A:</strong> Até 1 professor/profissional por equipe.</li>
-              <li><strong>Cat. Especial (Masc):</strong> Até 2 professores/profissionais por equipe.</li>
-              <li>As duplas não poderão ser repetidas durante todo o campeonato.</li>
-              <li>Nenhum jogador poderá atuar 2 vezes no mesmo confronto.</li>
-            </ul>
-          </Section>
-
-          {/* Taxas */}
-          <Section icon={<Award className="w-5 h-5" />} title="5. Taxas de Inscrição">
-            <div className="bg-gray-50 rounded-xl p-4">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--color-border)]">
-                    <th className="text-left py-2 font-semibold">Categoria</th>
-                    <th className="text-right py-2 font-semibold">Valor</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-[var(--color-border)]"><td className="py-2">Simples Masculino e Feminino</td><td className="text-right py-2">R$ 320,00</td></tr>
-                  <tr className="border-b border-[var(--color-border)]"><td className="py-2">Dupla Masculino e Feminino</td><td className="text-right py-2">R$ 640,00 (a dupla)</td></tr>
-                  <tr className="border-b border-[var(--color-border)]"><td className="py-2">Mirim / Infantil / Juvenil</td><td className="text-right py-2">R$ 290,00</td></tr>
-                  <tr><td className="py-2">Categoria por Equipes</td><td className="text-right py-2">R$ 360,00 (por participante)</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="mt-4">
-              <h4 className="font-semibold text-sm mb-2">Descontos:</h4>
-              <ul className="space-y-1 text-sm">
-                <li>Individual: R$ 50,00 para atletas inscritos em 2 categorias</li>
-                <li>Família (2 inscrições): R$ 50,00</li>
-                <li>Família (3 inscrições): R$ 100,00</li>
-                <li>Família (4 inscrições): R$ 150,00</li>
-                <li>Família (5 inscrições): R$ 200,00</li>
-                <li>Família (6 inscrições): R$ 250,00</li>
-                <li>Família (7 inscrições): R$ 300,00</li>
-              </ul>
-              <p className="text-xs text-[var(--color-text-muted)] mt-2">Família: pai, mãe e filhos em um núcleo familiar.</p>
-            </div>
-          </Section>
-
-          {/* Termo de Responsabilidade */}
-          <Section icon={<AlertTriangle className="w-5 h-5" />} title="6. Termo de Responsabilidade">
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm space-y-2">
-              <p>Os atletas participantes, ao se inscreverem, declaram estar cientes de todas as cláusulas e condições do regulamento.</p>
-              <p>Exoneram o Coopercotia Atlético Clube de toda e qualquer responsabilidade por problemas de danos materiais, morais, físicos ou de saúde.</p>
-              <p>Autorizam o uso de imagem para fins de divulgação do evento.</p>
-              <p>Os casos omissos serão resolvidos pela Comissão Técnica.</p>
-            </div>
-          </Section>
-
-          <div className="text-center pt-4 border-t border-[var(--color-border)]">
-            <p className="text-sm font-semibold text-[var(--color-text)]">Coopercotia Atlético Clube</p>
-            <p className="text-xs text-[var(--color-text-secondary)]">Departamento de Tênis - Comissão Técnica</p>
-            <p className="text-xs text-[var(--color-text-muted)] mt-1">27 de abril de 2026</p>
+      <div className="space-y-6">
+        {/* Regras Gerais */}
+        <Card color="blue" icon={<Shield className="w-5 h-5" />} title="1. Regras Gerais">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
+            <Rule n="1.1">Prazo de inscrição: <strong>12 de junho de 2026</strong>.</Rule>
+            <Rule n="1.2">Máximo <strong>2 categorias</strong> por atleta (não 2 por equipe).</Rule>
+            <Rule n="1.3">Apenas 1 restrição de horário (Simples e Duplas).</Rule>
+            <Rule n="1.4">Equipes: informar jogadores até <strong>12/06/2026</strong>.</Rule>
+            <Rule n="1.5">Comissão Técnica pode transferir atletas/equipes por nível técnico.</Rule>
+            <Rule n="1.6">Repescagem: Set Profissional (8 games) com NO-AD.</Rule>
+            <Rule n="1.7">Equipes: permitido 1 atleta <strong>não Nikkei</strong> por equipe.</Rule>
+            <Rule n="1.8">Duplas: cônjuge de descendente japonês não conta como não Nikkei.</Rule>
+            <Rule n="1.9">Regras oficiais do Tênis (ITF/CBT/FPT).</Rule>
+            <Rule n="1.10">Atitudes antidesportivas: suspensão até 2 anos. Reincidência: banimento.</Rule>
           </div>
-        </div>
+        </Card>
+
+        {/* Categorias */}
+        <Card color="purple" icon={<Trophy className="w-5 h-5" />} title="2. Categorias">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CategoriaCard title="Simples Masculino" color="blue" items={[
+              { cat: 'Especial', desc: 'Professores, Profissionais, Ex-Profissionais e 1ª Classes', badge: 'Premiada' },
+              { cat: 'A', desc: '1ª e 2ª Classes' },
+              { cat: 'B', desc: '3ª e 4ª Classes' },
+              { cat: 'C', desc: '5ª Classe e Principiantes/Estreantes' },
+              { cat: 'Mirim', desc: 'Até 12 anos', badge: 'Repescagem' },
+              { cat: 'Infantil', desc: 'Até 15 anos', badge: 'Repescagem' },
+              { cat: 'Juvenil', desc: 'Até 18 anos', badge: 'Repescagem' },
+            ]} />
+            <CategoriaCard title="Simples Feminino" color="pink" items={[
+              { cat: 'Especial', desc: 'Professoras, Profissionais, Ex-Profissionais e 1ª Classes', badge: 'Premiada' },
+              { cat: 'A', desc: '1ª e 2ª Classes' },
+              { cat: 'B', desc: '3ª e 4ª Classes' },
+              { cat: 'C', desc: 'Principiantes/Estreantes' },
+              { cat: 'Mirim', desc: 'Até 12 anos', badge: 'Repescagem' },
+              { cat: 'Infantil', desc: 'Até 15 anos', badge: 'Repescagem' },
+              { cat: 'Juvenil', desc: 'Até 18 anos', badge: 'Repescagem' },
+            ]} />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <CategoriaCard title="Duplas Masculino / Feminino" color="emerald" items={[
+              { cat: 'A', desc: '1ª e 2ª Classes', badge: 'Repescagem' },
+              { cat: 'B', desc: '3ª e 4ª Classes', badge: 'Repescagem' },
+              { cat: 'C', desc: 'Principiantes/Estreantes', badge: 'Repescagem' },
+            ]} />
+            <div className="space-y-4">
+              <CategoriaCard title="Equipe Dupla Masculino" color="amber" items={[
+                { cat: 'Especial / A / B / C', desc: '' },
+              ]} />
+              <CategoriaCard title="Equipe Dupla Feminino" color="amber" items={[
+                { cat: 'A / B / C', desc: '' },
+              ]} />
+              <CategoriaCard title="Equipe Dupla Mista Super" color="amber" items={[
+                { cat: 'M60/F50 | M65/F55 | M70/F60 | M75/F65', desc: '' },
+              ]} />
+              <CategoriaCard title="Equipe Mista Livre" color="amber" items={[
+                { cat: 'A / B / C', desc: '' },
+              ]} />
+            </div>
+          </div>
+        </Card>
+
+        {/* Formato dos Jogos */}
+        <Card color="emerald" icon={<Swords className="w-5 h-5" />} title="3. Formato dos Jogos">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormatoCard
+              title="Simples e Duplas (Especial, A, B, C)"
+              items={[
+                'Melhor de 3 sets com NO-AD',
+                'Empate 6×6: tie-break normal (até 7)',
+                '3º set: super tie-break (até 10)',
+              ]}
+            />
+            <FormatoCard
+              title="Mirim, Infantil, Juvenil"
+              items={[
+                'Mesmo formato dos adultos',
+                'Repescagem: Set Profissional (8 games) NO-AD',
+                'Empate 7×7: tie-break normal',
+              ]}
+            />
+            <FormatoCard
+              title="Equipes"
+              items={[
+                '3 jogos de duplas por confronto',
+                'Súmula 30 min antes (inalterável)',
+                'Duplas não podem repetir no campeonato',
+                'Nenhum jogador joga 2× no mesmo confronto',
+              ]}
+            />
+            <FormatoCard
+              title="Dupla Mista (NO-AD)"
+              items={[
+                'Sacador e recebedor do mesmo sexo',
+                'WO: contagem de 6×0 6×0 ou 8×0',
+              ]}
+            />
+          </div>
+        </Card>
+
+        {/* Composição Equipes */}
+        <Card color="amber" icon={<UserCheck className="w-5 h-5" />} title="4. Composição das Equipes">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <EquipeRule label="Tamanho" value="Mínimo 4, máximo 8 jogadores" />
+            <EquipeRule label="Não Nikkei" value="Máximo 1 por equipe" />
+            <EquipeRule label="Cônjuge" value="Não conta como não Nikkei" />
+            <EquipeRule label="Cat. C e B" value="Sem professor/profissional" alert />
+            <EquipeRule label="Cat. A" value="Até 1 professor/profissional" />
+            <EquipeRule label="Cat. Especial" value="Até 2 professores (Masc)" />
+          </div>
+        </Card>
+
+        {/* Premiação */}
+        <Card color="yellow" icon={<Medal className="w-5 h-5" />} title="5. Premiação">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200 rounded-xl p-5 text-center">
+              <Medal className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+              <p className="text-xs text-amber-600 uppercase font-semibold tracking-wider">Todas as Categorias</p>
+              <p className="text-sm text-[var(--color-text)] mt-1">Medalhas para campeões, vice-campeões e campeões da repescagem</p>
+            </div>
+            <div className="flex-1 bg-gradient-to-br from-amber-100 to-yellow-100 border-2 border-amber-300 rounded-xl p-5 text-center shadow-md">
+              <Trophy className="w-8 h-8 text-amber-600 mx-auto mb-2" />
+              <p className="text-xs text-amber-700 uppercase font-bold tracking-wider">Premiação Especial</p>
+              <p className="text-[10px] text-amber-600 mb-3">Simples Masculino e Feminino Especial</p>
+              <div className="space-y-2">
+                <div className="bg-white rounded-lg px-3 py-2">
+                  <p className="text-xs text-[var(--color-text-muted)]">Campeão(ã)</p>
+                  <p className="text-xl font-extrabold text-amber-700">R$ 2.000</p>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1 bg-white rounded-lg px-2 py-1.5">
+                    <p className="text-[10px] text-[var(--color-text-muted)]">Vice</p>
+                    <p className="text-sm font-bold text-amber-600">R$ 1.000</p>
+                  </div>
+                  <div className="flex-1 bg-white rounded-lg px-2 py-1.5">
+                    <p className="text-[10px] text-[var(--color-text-muted)]">Semi</p>
+                    <p className="text-sm font-bold text-amber-600">R$ 500</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Taxas */}
+        <Card color="green" icon={<DollarSign className="w-5 h-5" />} title="6. Taxas de Inscrição">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
+            <PriceCard label="Simples" value="R$ 320" sublabel="Masculino e Feminino" />
+            <PriceCard label="Duplas" value="R$ 640" sublabel="A dupla" />
+            <PriceCard label="Juvenis" value="R$ 290" sublabel="Mirim / Infantil / Juvenil" />
+            <PriceCard label="Equipes" value="R$ 360" sublabel="Por participante" />
+          </div>
+
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Percent className="w-4 h-4 text-green-600" />
+              <h4 className="font-semibold text-sm text-green-800">Descontos</h4>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm text-green-700">
+              <p><strong>Individual:</strong> R$ 50 para 2 categorias</p>
+              <p><strong>Família 2 inscrições:</strong> R$ 50</p>
+              <p><strong>Família 3 inscrições:</strong> R$ 100</p>
+              <p><strong>Família 4 inscrições:</strong> R$ 150</p>
+              <p><strong>Família 5 inscrições:</strong> R$ 200</p>
+              <p><strong>Família 6 inscrições:</strong> R$ 250</p>
+              <p><strong>Família 7 inscrições:</strong> R$ 300</p>
+              <p className="text-xs text-green-600 italic col-span-full mt-1">Família: pai, mãe e filhos em um núcleo familiar.</p>
+            </div>
+          </div>
+        </Card>
+
+        {/* Termo */}
+        <Card color="red" icon={<AlertTriangle className="w-5 h-5" />} title="7. Termo de Responsabilidade">
+          <div className="bg-red-50 border border-red-200 rounded-xl p-5 space-y-3 text-sm text-red-800">
+            <p>Os atletas participantes, ao se inscreverem no Campeonato, <strong>DECLARAM</strong> que estão cientes de todas as cláusulas e condições estipuladas no Regulamento.</p>
+            <p>Exoneram o Coopercotia Atlético Clube, seus organizadores, colaboradores e patrocinadores de <strong>TODA E QUALQUER RESPONSABILIDADE</strong> por quaisquer problemas de danos materiais, morais, físicos ou de saúde.</p>
+            <p>Autorizam o uso de sua imagem para fins de divulgação do evento por fotos, vídeos e entrevistas em qualquer meio de comunicação.</p>
+            <p>Os casos omissos neste regulamento serão resolvidos pela <strong>Comissão Técnica</strong>.</p>
+          </div>
+        </Card>
+      </div>
+
+      {/* Footer */}
+      <div className="mt-8 text-center bg-white rounded-2xl border border-[var(--color-border)] p-6 shadow-sm">
+        <Trophy className="w-8 h-8 text-[var(--color-primary)] mx-auto mb-2" />
+        <p className="font-bold text-[var(--color-text)]">Coopercotia Atlético Clube</p>
+        <p className="text-sm text-[var(--color-text-secondary)]">Departamento de Tênis - Comissão Técnica</p>
+        <p className="text-xs text-[var(--color-text-muted)] mt-1">Publicado em 27 de abril de 2026</p>
+        <Link href="/inscricao" className="inline-flex items-center gap-2 mt-4 px-6 py-2.5 bg-[var(--color-primary)] text-white text-sm font-semibold rounded-xl hover:bg-[var(--color-primary-dark)] transition-colors">
+          Fazer Inscrição
+        </Link>
       </div>
     </div>
   );
 }
 
-function Section({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+function Card({ color, icon, title, children }: { color: string; icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  const colors: Record<string, string> = {
+    blue: 'border-blue-200 bg-white', purple: 'border-purple-200 bg-white',
+    emerald: 'border-emerald-200 bg-white', amber: 'border-amber-200 bg-white',
+    yellow: 'border-yellow-200 bg-white', green: 'border-green-200 bg-white',
+    red: 'border-red-200 bg-white',
+  };
+  const iconColors: Record<string, string> = {
+    blue: 'bg-blue-100 text-blue-600', purple: 'bg-purple-100 text-purple-600',
+    emerald: 'bg-emerald-100 text-emerald-600', amber: 'bg-amber-100 text-amber-600',
+    yellow: 'bg-amber-100 text-amber-600', green: 'bg-green-100 text-green-600',
+    red: 'bg-red-100 text-red-600',
+  };
   return (
-    <div>
-      <h3 className="flex items-center gap-2 font-bold text-[var(--color-text)] mb-3">
-        <span className="text-[var(--color-primary)]">{icon}</span>
-        {title}
-      </h3>
-      <div className="text-sm text-[var(--color-text-secondary)] leading-relaxed space-y-2">
+    <div className={`rounded-2xl border ${colors[color]} shadow-sm overflow-hidden`}>
+      <div className="p-5 sm:p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${iconColors[color]}`}>{icon}</div>
+          <h2 className="text-lg font-bold text-[var(--color-text)]">{title}</h2>
+        </div>
         {children}
       </div>
+    </div>
+  );
+}
+
+function InfoCard({ icon, label, value, sublabel, color }: { icon: React.ReactNode; label: string; value: string; sublabel: string; color: string }) {
+  const bg = color === 'red' ? 'bg-red-50 border-red-200' : 'bg-blue-50 border-blue-200';
+  const txt = color === 'red' ? 'text-red-700' : 'text-blue-700';
+  return (
+    <div className={`${bg} border rounded-xl p-4`}>
+      <div className={`flex items-center gap-2 ${txt} mb-1`}>{icon}<span className="text-xs font-semibold uppercase tracking-wider">{label}</span></div>
+      <p className={`text-lg font-extrabold ${txt}`}>{value}</p>
+      <p className={`text-xs ${color === 'red' ? 'text-red-500' : 'text-blue-500'}`}>{sublabel}</p>
+    </div>
+  );
+}
+
+function Rule({ n, children }: { n: string; children: React.ReactNode }) {
+  return (
+    <div className="flex gap-2 text-sm text-[var(--color-text-secondary)]">
+      <span className="text-[var(--color-primary)] font-bold text-xs mt-0.5 shrink-0">{n}</span>
+      <p>{children}</p>
+    </div>
+  );
+}
+
+function CategoriaCard({ title, color, items }: { title: string; color: string; items: { cat: string; desc: string; badge?: string }[] }) {
+  const borderColors: Record<string, string> = { blue: 'border-blue-200', pink: 'border-pink-200', emerald: 'border-emerald-200', amber: 'border-amber-200' };
+  const headerColors: Record<string, string> = { blue: 'bg-blue-50 text-blue-700', pink: 'bg-pink-50 text-pink-700', emerald: 'bg-emerald-50 text-emerald-700', amber: 'bg-amber-50 text-amber-700' };
+  const badgeColors: Record<string, string> = { blue: 'bg-blue-100 text-blue-600', pink: 'bg-pink-100 text-pink-600', emerald: 'bg-emerald-100 text-emerald-600', amber: 'bg-amber-100 text-amber-600' };
+  return (
+    <div className={`border ${borderColors[color]} rounded-xl overflow-hidden`}>
+      <div className={`px-4 py-2 ${headerColors[color]}`}>
+        <h4 className="font-semibold text-sm">{title}</h4>
+      </div>
+      <div className="divide-y divide-gray-100">
+        {items.map((item, i) => (
+          <div key={i} className="px-4 py-2 flex items-center justify-between gap-2">
+            <div>
+              <span className="text-sm font-medium text-[var(--color-text)]">{item.cat}</span>
+              {item.desc && <span className="text-xs text-[var(--color-text-muted)] ml-1.5">- {item.desc}</span>}
+            </div>
+            {item.badge && <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${badgeColors[color]}`}>{item.badge}</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FormatoCard({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+      <h4 className="font-semibold text-sm text-emerald-800 mb-2">{title}</h4>
+      <ul className="space-y-1">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-start gap-2 text-xs text-emerald-700">
+            <span className="text-emerald-400 mt-0.5">-</span>{item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function EquipeRule({ label, value, alert }: { label: string; value: string; alert?: boolean }) {
+  return (
+    <div className={`rounded-xl p-3 border ${alert ? 'bg-red-50 border-red-200' : 'bg-amber-50 border-amber-200'}`}>
+      <p className={`text-[10px] font-semibold uppercase tracking-wider ${alert ? 'text-red-500' : 'text-amber-500'}`}>{label}</p>
+      <p className={`text-sm font-medium mt-0.5 ${alert ? 'text-red-700' : 'text-amber-800'}`}>{value}</p>
+    </div>
+  );
+}
+
+function PriceCard({ label, value, sublabel }: { label: string; value: string; sublabel: string }) {
+  return (
+    <div className="bg-white border border-green-200 rounded-xl p-4 text-center">
+      <p className="text-xs text-green-600 font-semibold uppercase tracking-wider">{label}</p>
+      <p className="text-2xl font-extrabold text-[var(--color-text)] mt-1">{value}</p>
+      <p className="text-[10px] text-[var(--color-text-muted)] mt-0.5">{sublabel}</p>
     </div>
   );
 }
