@@ -6,7 +6,7 @@ import { isAuthenticated, clearSession } from '@/lib/auth';
 import {
   Users, UserPlus, Trophy, ClipboardList, TrendingUp,
   Calendar, Search, Filter, Download, Trash2, CheckCircle, XCircle, Clock,
-  BarChart3, PieChart, Pencil, LogOut,
+  BarChart3, PieChart, Pencil, LogOut, Upload,
 } from 'lucide-react';
 import Link from 'next/link';
 import { getInscricoes, atualizarStatus, excluirInscricao, syncFromServer } from '@/lib/store';
@@ -215,7 +215,13 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-[var(--color-text)]">Dashboard</h1>
           <p className="text-sm text-[var(--color-text-secondary)]">Painel de gestão de inscrições do 78º Intercolonial</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
+          <Link
+            href="/dashboard/importar"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors"
+          >
+            <Upload className="w-4 h-4" /> Importar PDF
+          </Link>
           <button
             onClick={exportCSV}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[var(--color-primary)] text-white text-sm font-medium hover:bg-[var(--color-primary-dark)] transition-colors"

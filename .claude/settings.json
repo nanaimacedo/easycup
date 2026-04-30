@@ -35,7 +35,10 @@
       "Bash(heroku config:get DATABASE_URL --app intercolonial78-db)",
       "Bash(heroku addons:info postgresql-concentric-31064 --app intercolonial78-db)",
       "Bash(heroku pg:psql:*)",
-      "Bash(DATABASE_URL=\"postgres://u7nuq6jtojn2hv:pdefb95c9030713b03f0aa2e190d98f54084e308feb62578592edb7d28c4c6afa@cd7f19r8oktbkp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d9fs6oss3sqb83\" node -e \":*)"
+      "Bash(DATABASE_URL=\"postgres://u7nuq6jtojn2hv:pdefb95c9030713b03f0aa2e190d98f54084e308feb62578592edb7d28c4c6afa@cd7f19r8oktbkp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d9fs6oss3sqb83\" node -e \":*)",
+      "Bash(node -e \"const p = require\\(''pdf-parse''\\); console.log\\(typeof p, Object.keys\\(p\\)\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(npm uninstall:*)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Nanai Macedo\\Desktop\\EasyCup\\src\\app\\api\\inscricoes",
