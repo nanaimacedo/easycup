@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
-import { Menu, X, Trophy, ClipboardList, Lock, Info, BookOpen } from 'lucide-react';
+import { Menu, X, ClipboardList, Lock, Info, BookOpen } from 'lucide-react';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -12,9 +13,13 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark)] rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-              <Trophy className="w-5 h-5 text-white" />
-            </div>
+            <Image
+              src="/logo-intercolonial.jpeg"
+              alt="78º Intercolonial"
+              width={44}
+              height={36}
+              className="group-hover:scale-105 transition-transform"
+            />
             <div className="hidden sm:block">
               <p className="font-bold text-[var(--color-text)] text-sm leading-tight">78º Intercolonial</p>
               <p className="text-[10px] text-[var(--color-text-secondary)] leading-tight">Coopercotia Atlético Clube</p>

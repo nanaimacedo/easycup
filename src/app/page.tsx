@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Lock, Eye, EyeOff, AlertTriangle, Shield, KeyRound, Trophy, ClipboardList, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { Lock, Eye, EyeOff, AlertTriangle, Shield, KeyRound, ClipboardList, ArrowRight, BookOpen } from 'lucide-react';
 import { setSession, isAuthenticated } from '@/lib/auth';
 import { TORNEIO } from '@/lib/constants';
 
@@ -62,11 +63,16 @@ export default function Home() {
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-lg">
-        {/* Header do torneio */}
+        {/* Header do torneio com logo */}
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark)] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Trophy className="w-8 h-8 text-white" />
-          </div>
+          <Image
+            src="/logo-intercolonial.jpeg"
+            alt="78º Intercolonial de Tênis 2026"
+            width={200}
+            height={160}
+            className="mx-auto mb-4"
+            priority
+          />
           <h1 className="text-2xl font-bold text-[var(--color-text)]">{TORNEIO.nome}</h1>
           <p className="text-sm text-[var(--color-text-secondary)] mt-1">{TORNEIO.clube}</p>
         </div>
@@ -192,7 +198,7 @@ export default function Home() {
               className="flex items-center justify-between p-3 rounded-xl hover:bg-amber-50 transition-colors group"
             >
               <div className="flex items-center gap-3">
-                <Trophy className="w-5 h-5 text-amber-500" />
+                <BookOpen className="w-5 h-5 text-amber-500" />
                 <div>
                   <p className="text-sm font-medium text-[var(--color-text)]">Sobre o Torneio</p>
                   <p className="text-xs text-[var(--color-text-muted)]">Datas, categorias e regulamento</p>

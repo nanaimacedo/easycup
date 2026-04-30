@@ -26,10 +26,20 @@
       "Bash(node -e \"require\\(''bcryptjs''\\).hash\\(''Inter@2026'', 12\\).then\\(console.log\\)\")",
       "Bash(echo '$2b$12$A22ND.4/.PJn0ARqu9pkBu1i1yaA9N.sCb5f//tJe7hcSs/IL20Jy')",
       "Bash(supabase --version)",
-      "Bash(npx supabase:*)"
+      "Bash(npx supabase:*)",
+      "Bash(vercel alias:*)",
+      "Bash(curl -s \"https://xmobgpmpujmrxxmsubzc.supabase.co/rest/v1/\" -H \"apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\")",
+      "Bash(heroku auth:status)",
+      "Bash(heroku apps:create intercolonial78-db --region us)",
+      "Bash(heroku addons:create heroku-postgresql:essential-0 --app intercolonial78-db)",
+      "Bash(heroku config:get DATABASE_URL --app intercolonial78-db)",
+      "Bash(heroku addons:info postgresql-concentric-31064 --app intercolonial78-db)",
+      "Bash(heroku pg:psql:*)",
+      "Bash(DATABASE_URL=\"postgres://u7nuq6jtojn2hv:pdefb95c9030713b03f0aa2e190d98f54084e308feb62578592edb7d28c4c6afa@cd7f19r8oktbkp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d9fs6oss3sqb83\" node -e \":*)"
     ],
     "additionalDirectories": [
-      "c:\\Users\\Nanai Macedo\\Desktop\\EasyCup\\src\\app\\api\\inscricoes"
+      "c:\\Users\\Nanai Macedo\\Desktop\\EasyCup\\src\\app\\api\\inscricoes",
+      "c:\\Users\\Nanai Macedo\\Desktop"
     ]
   }
 }

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSupabase, isSupabaseConfigured } from '@/lib/supabase';
+import { query, execute, isDbConfigured } from '@/lib/db';
 import { z } from 'zod';
 
-// Validação server-side do payload de inscrição
 const inscricaoPayloadSchema = z.object({
   modalidade: z.enum(['simples', 'duplas', 'equipes']),
   dados: z.record(z.string(), z.unknown()),
@@ -22,29 +21,21 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
   }
 
-  if (!isSupabaseConfigured()) {
+  if (!isDbConfigured()) {
     return NextResponse.json({ data: [], source: 'no-db' });
   }
 
-  const db = getServerSupabase();
-  const { data, error } = await db
-    .from('inscricoes')
-    .select('*')
-    .order('created_at', { ascending: false });
+  const rows = await query(
+    'SELECT * FROM inscricoes ORDER BY created_at DESC'
+  );
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  const inscricoes = (data || []).map(mapFromDb);
-  return NextResponse.json({ data: inscricoes, source: 'supabase' });
+  return NextResponse.json({ data: rows.map(mapFromDb), source: 'postgres' });
 }
 
 // POST /api/inscricoes - criar nova inscrição (público)
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
-  // Validação server-side
   const parsed = inscricaoPayloadSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
@@ -57,32 +48,23 @@ export async function POST(request: NextRequest) {
   const id = generateId();
   const now = new Date().toISOString();
 
-  // Persistir no Supabase se configurado
-  if (isSupabaseConfigured()) {
-    const db = getServerSupabase();
-    const { error } = await db.from('inscricoes').insert({
-      id,
-      modalidade,
-      dados,
-      valor,
-      desconto,
-      valor_final: valorFinal,
-      status: 'pendente',
-    });
+  if (isDbConfigured()) {
+    await execute(
+      `INSERT INTO inscricoes (id, modalidade, dados, valor, desconto, valor_final, status)
+       VALUES ($1, $2, $3, $4, $5, $6, 'pendente')`,
+      [id, modalidade, JSON.stringify(dados), valor, desconto, valorFinal]
+    );
 
-    if (error) {
-      return NextResponse.json({ error: 'Erro ao salvar inscrição', details: error.message }, { status: 500 });
-    }
-
-    // Audit log
-    await db.from('audit_logs').insert({
-      action: 'INSCRICAO_CRIADA',
-      entity: 'inscricoes',
-      entity_id: id,
-      ip_address: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null,
-      user_agent: request.headers.get('user-agent') || null,
-      details: { modalidade, valorFinal },
-    });
+    await execute(
+      `INSERT INTO audit_logs (action, entity, entity_id, ip_address, user_agent, details)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [
+        'INSCRICAO_CRIADA', 'inscricoes', id,
+        request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || null,
+        request.headers.get('user-agent') || null,
+        JSON.stringify({ modalidade, valorFinal }),
+      ]
+    );
   }
 
   return NextResponse.json({
@@ -95,7 +77,7 @@ export async function POST(request: NextRequest) {
       dataInscricao: now,
       status: 'pendente',
     },
-    persisted: isSupabaseConfigured(),
+    persisted: isDbConfigured(),
   }, { status: 201 });
 }
 
@@ -103,7 +85,7 @@ export async function POST(request: NextRequest) {
 function mapFromDb(row: any) {
   return {
     id: row.id,
-    inscricao: row.dados,
+    inscricao: typeof row.dados === 'string' ? JSON.parse(row.dados) : row.dados,
     valor: Number(row.valor),
     desconto: Number(row.desconto),
     valorFinal: Number(row.valor_final),
