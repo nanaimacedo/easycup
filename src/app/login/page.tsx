@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { Lock, Eye, EyeOff, AlertTriangle, Shield, KeyRound } from 'lucide-react';
 import { setSession } from '@/lib/auth';
 
@@ -57,9 +58,14 @@ export default function LoginPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-dark)] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Shield className="w-8 h-8 text-white" />
-          </div>
+          <Image
+            src="/logo-intercolonial.jpeg"
+            alt="78º Intercolonial de Tênis 2026"
+            width={180}
+            height={140}
+            className="mx-auto mb-4"
+            priority
+          />
           <h1 className="text-2xl font-bold text-[var(--color-text)]">Acesso Administrativo</h1>
           <p className="text-sm text-[var(--color-text-secondary)] mt-1">
             Área restrita - Dashboard do 78º Intercolonial
