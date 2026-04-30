@@ -180,30 +180,83 @@ export default function DashboardPage() {
   };
 
   const exportCSV = () => {
-    const headers = ['ID', 'Modalidade', 'Nome', 'Categoria', 'Valor', 'Status', 'Data'];
+    const headers = [
+      'Código', 'Modalidade', 'Sexo', 'Categoria', 'Status',
+      'Nome', 'Data Nascimento', 'Endereço', 'Bairro', 'Cidade', 'Estado', 'CEP',
+      'Telefone', 'E-mail', 'Clube',
+      'Nome Jogador 2', 'Data Nasc. Jogador 2', 'Endereço Jogador 2', 'Bairro J2', 'Cidade J2', 'Estado J2', 'CEP J2',
+      'Telefone J2', 'E-mail J2', 'Clube J2',
+      'Nome Equipe', 'Capitão', 'Qtd Membros', 'Membros (Nomes)',
+      'Restrição de Data', 'Detalhe Restrição',
+      'LGPD Consentimento', 'LGPD Imagem',
+      'Valor (R$)', 'Desconto (R$)', 'Valor Final (R$)',
+      'Data Inscrição',
+    ];
+
+    const safe = (v: unknown) => {
+      if (v === undefined || v === null) return '';
+      const s = String(v).replace(/;/g, ',').replace(/\n/g, ' ');
+      return s;
+    };
+
     const rows = inscricoes.map((reg) => {
-      const { inscricao } = reg;
-      let nome = '';
-      let categoria = '';
-      if (inscricao.modalidade === 'simples') {
-        nome = inscricao.nome;
-        categoria = `${inscricao.sexo} ${inscricao.categoria}`;
-      } else if (inscricao.modalidade === 'duplas') {
-        nome = `${inscricao.jogador1.nome} / ${inscricao.jogador2.nome}`;
-        categoria = `${inscricao.sexo} ${inscricao.categoria}`;
-      } else {
-        nome = inscricao.nomeEquipe;
-        categoria = inscricao.categoria;
+      const i = reg.inscricao;
+      const base = [
+        reg.id,
+        i.modalidade,
+        i.modalidade !== 'equipes' ? safe(i.sexo) : '',
+        safe(i.categoria),
+        reg.status,
+      ];
+
+      let pessoais: string[] = [];
+      let jogador2: string[] = [];
+      let equipe: string[] = [];
+
+      if (i.modalidade === 'simples') {
+        pessoais = [safe(i.nome), safe(i.dataNascimento), safe(i.endereco), safe(i.bairro), safe(i.cidade), safe(i.estado), safe(i.cep), safe(i.telefone), safe(i.email), safe(i.clube)];
+        jogador2 = ['', '', '', '', '', '', '', '', '', ''];
+        equipe = ['', '', '', ''];
+      } else if (i.modalidade === 'duplas') {
+        const j1 = i.jogador1;
+        const j2 = i.jogador2;
+        pessoais = [safe(j1.nome), safe(j1.dataNascimento), safe(j1.endereco), safe(j1.bairro), safe(j1.cidade), safe(j1.estado), safe(j1.cep), safe(j1.telefone), safe(j1.email), safe(j1.clube)];
+        jogador2 = [safe(j2.nome), safe(j2.dataNascimento), safe(j2.endereco), safe(j2.bairro), safe(j2.cidade), safe(j2.estado), safe(j2.cep), safe(j2.telefone), safe(j2.email), safe(j2.clube)];
+        equipe = ['', '', '', ''];
+      } else if (i.modalidade === 'equipes') {
+        pessoais = ['', '', '', '', '', '', '', '', '', ''];
+        jogador2 = ['', '', '', '', '', '', '', '', '', ''];
+        const nomesMembros = i.membros?.map((m: { nome: string }) => m.nome).join(' | ') || '';
+        equipe = [safe(i.nomeEquipe), safe(i.capitao), String(i.membros?.length || 0), nomesMembros];
       }
-      return [reg.id, inscricao.modalidade, nome, categoria, reg.valorFinal.toFixed(2), reg.status, new Date(reg.dataInscricao).toLocaleDateString('pt-BR')];
+
+      const restricao = [
+        i.problemaData ? 'Sim' : 'Não',
+        safe(i.problemaDataDetalhe),
+      ];
+
+      const lgpd = [
+        i.lgpdConsentimento ? 'Sim' : 'Não',
+        i.lgpdImagemConsentimento ? 'Sim' : 'Não',
+      ];
+
+      const valores = [
+        reg.valor.toFixed(2),
+        reg.desconto.toFixed(2),
+        reg.valorFinal.toFixed(2),
+        new Date(reg.dataInscricao).toLocaleDateString('pt-BR'),
+      ];
+
+      return [...base, ...pessoais, ...jogador2, ...equipe, ...restricao, ...lgpd, ...valores];
     });
 
-    const csv = [headers, ...rows].map(r => r.join(';')).join('\n');
+    const bom = '\uFEFF'; // BOM para Excel reconhecer UTF-8
+    const csv = bom + [headers, ...rows].map(r => r.join(';')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'inscricoes_intercolonial.csv';
+    a.download = `inscricoes_78_intercolonial_${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
