@@ -66,7 +66,7 @@ export default function Home() {
         {/* Header do torneio com logo */}
         <div className="text-center mb-8">
           <Image
-            src="/logo-intercolonial.jpeg"
+            src="/logo-intercolonial.png"
             alt="78º Intercolonial de Tênis 2026"
             width={200}
             height={160}

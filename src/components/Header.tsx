@@ -14,7 +14,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-3 group">
             <Image
-              src="/logo-intercolonial.jpeg"
+              src="/logo-intercolonial.png"
               alt="78º Intercolonial"
               width={44}
               height={36}

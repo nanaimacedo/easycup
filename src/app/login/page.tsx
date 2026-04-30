@@ -59,7 +59,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Image
-            src="/logo-intercolonial.jpeg"
+            src="/logo-intercolonial.png"
             alt="78º Intercolonial de Tênis 2026"
             width={180}
             height={140}
