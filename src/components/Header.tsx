@@ -16,9 +16,9 @@ export default function Header() {
             <Image
               src="/logo-intercolonial.png"
               alt="78º Intercolonial"
-              width={44}
-              height={36}
-              className="group-hover:scale-105 transition-transform"
+              width={88}
+              height={72}
+              className="w-[72px] sm:w-[44px] h-auto group-hover:scale-105 transition-transform"
             />
             <div className="hidden sm:block">
               <p className="font-bold text-[var(--color-text)] text-sm leading-tight">78º Intercolonial</p>

@@ -38,7 +38,17 @@
       "Bash(DATABASE_URL=\"postgres://u7nuq6jtojn2hv:pdefb95c9030713b03f0aa2e190d98f54084e308feb62578592edb7d28c4c6afa@cd7f19r8oktbkp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d9fs6oss3sqb83\" node -e \":*)",
       "Bash(node -e \"const p = require\\(''pdf-parse''\\); console.log\\(typeof p, Object.keys\\(p\\)\\)\")",
       "Bash(node -e \":*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(vercel ls:*)",
+      "Bash(vercel domains:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" https://easycup.vercel.app)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://intercolonial78.vercel.app)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://ic78-tenis.vercel.app)",
+      "Bash(vercel inspect:*)",
+      "Bash(vercel project:*)",
+      "Bash(curl -s https://easycup.vercel.app -o /dev/null -w \"easycup: %{http_code}\\\\n\")",
+      "Bash(curl -s https://intercolonial78.vercel.app -o /dev/null -w \"intercolonial78: %{http_code}\\\\n\")",
+      "Bash(vercel --yes --prod --name intercolonial78)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Nanai Macedo\\Desktop\\EasyCup\\src\\app\\api\\inscricoes",

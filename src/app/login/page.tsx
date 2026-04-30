@@ -61,9 +61,9 @@ export default function LoginPage() {
           <Image
             src="/logo-intercolonial.png"
             alt="78º Intercolonial de Tênis 2026"
-            width={180}
-            height={140}
-            className="mx-auto mb-4"
+            width={400}
+            height={320}
+            className="mx-auto mb-4 w-[280px] sm:w-[180px] h-auto"
             priority
           />
           <h1 className="text-2xl font-bold text-[var(--color-text)]">Acesso Administrativo</h1>

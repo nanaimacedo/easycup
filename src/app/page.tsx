@@ -68,9 +68,9 @@ export default function Home() {
           <Image
             src="/logo-intercolonial.png"
             alt="78º Intercolonial de Tênis 2026"
-            width={200}
-            height={160}
-            className="mx-auto mb-4"
+            width={400}
+            height={320}
+            className="mx-auto mb-4 w-[280px] sm:w-[200px] h-auto"
             priority
           />
           <h1 className="text-2xl font-bold text-[var(--color-text)]">{TORNEIO.nome}</h1>
