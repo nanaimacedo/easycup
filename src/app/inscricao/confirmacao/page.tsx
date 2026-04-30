@@ -62,7 +62,7 @@ function ConfirmacaoContent() {
         <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] p-5 text-white">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-blue-200">RECIBO DE INSCRICAO</p>
+              <p className="text-xs text-blue-200">RECIBO DE INSCRIÇÃO</p>
               <p className="font-bold">{TORNEIO.nome}</p>
             </div>
             <div className="text-right">
@@ -110,14 +110,14 @@ function ConfirmacaoContent() {
               <div className="text-right">
                 <p className="text-xs text-green-600">Status</p>
                 <span className="inline-block px-3 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
-                  Pagamento na Presenca
+                  Pagamento na Presença
                 </span>
               </div>
             </div>
           </div>
 
           <p className="text-xs text-[var(--color-text-muted)] text-center">
-            A taxa de inscrição sera paga no ato da presença no {TORNEIO.clube}.
+            A taxa de inscrição será paga no ato da presença no {TORNEIO.clube}.
           </p>
         </div>
       </div>

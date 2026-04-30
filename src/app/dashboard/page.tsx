@@ -109,7 +109,7 @@ function calcStats(inscricoes: InscricaoRegistro[]): DashboardStats {
 }
 
 function getFaixaEtária(age: number): string {
-  if (age <= 12) return 'Ate 12 anos';
+  if (age <= 12) return 'Até 12 anos';
   if (age <= 15) return '13-15 anos';
   if (age <= 18) return '16-18 anos';
   if (age <= 30) return '19-30 anos';
@@ -507,7 +507,7 @@ export default function DashboardPage() {
                 <EmptyState />
               ) : (
                 <div className="space-y-3">
-                  {['Ate 12 anos', '13-15 anos', '16-18 anos', '19-30 anos', '31-45 anos', '46-60 anos', '60+ anos'].map((faixa) => {
+                  {['Até 12 anos', '13-15 anos', '16-18 anos', '19-30 anos', '31-45 anos', '46-60 anos', '60+ anos'].map((faixa) => {
                     const count = stats.faixaEtária[faixa] || 0;
                     if (count === 0 && stats.totalAtletas === 0) return null;
                     return (

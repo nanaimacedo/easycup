@@ -7,7 +7,7 @@ export default function InscriçãoPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-[var(--color-text)]">Inscricao</h1>
+        <h1 className="text-3xl font-bold text-[var(--color-text)]">Inscrição</h1>
         <p className="text-[var(--color-text-secondary)] mt-2">Selecione a modalidade para realizar sua inscrição</p>
       </div>
 
@@ -56,7 +56,7 @@ export default function InscriçãoPage() {
 
       <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
         <p className="text-sm text-amber-800 font-medium">
-          Atenção: Maximo de 2 (duas) categorias por atleta. A taxa de inscrição sera paga no ato da presença.
+          Atenção: Máximo de 2 (duas) categorias por atleta. A taxa de inscrição será paga no ato da presença.
         </p>
       </div>
     </div>
@@ -84,7 +84,7 @@ function ModalCard({ href, icon, title, desc, color }: {
       <h3 className="text-lg font-bold text-[var(--color-text)] mb-2">{title}</h3>
       <p className="text-sm text-[var(--color-text-secondary)] mb-4">{desc}</p>
       <div className="flex items-center gap-1 text-sm font-medium text-[var(--color-primary)] group-hover:gap-2 transition-all">
-        Inscrever-se <ArrowRight className="w-4 h-4" />
+        Inscrever‑se <ArrowRight className="w-4 h-4" />
       </div>
     </Link>
   );

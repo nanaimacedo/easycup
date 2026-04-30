@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --no-import-alias --yes)",
+      "Bash(npx create-next-app@latest easycup-temp --typescript --tailwind --eslint --app --src-dir --no-import-alias --yes)",
+      "Bash(cp -r \"c:/Users/Nanai Macedo/Desktop/easycup-temp/\"* \"c:/Users/Nanai Macedo/Desktop/EasyCup/\")",
+      "Bash(cp -r \"c:/Users/Nanai Macedo/Desktop/easycup-temp/\".* \"c:/Users/Nanai Macedo/Desktop/EasyCup/\")",
+      "Bash(rm -rf \"c:/Users/Nanai Macedo/Desktop/easycup-temp\")",
+      "Bash(cp -r \"c:/Users/Nanai Macedo/Desktop/easycup-temp/package.json\" \"c:/Users/Nanai Macedo/Desktop/easycup-temp/package-lock.json\" \"c:/Users/Nanai Macedo/Desktop/easycup-temp/postcss.config.mjs\" \"c:/Users/Nanai Macedo/Desktop/easycup-temp/tsconfig.json\" \"c:/Users/Nanai Macedo/Desktop/EasyCup/\")",
+      "Bash(cp -r \"c:/Users/Nanai Macedo/Desktop/easycup-temp/src\" \"c:/Users/Nanai Macedo/Desktop/easycup-temp/public\" \"c:/Users/Nanai Macedo/Desktop/EasyCup/\")",
+      "Bash(find . -name \"*.tsx\" -exec sed -i -e 's/handleInscrição/handleInscricao/g' -e 's/Inscrição\\\\b/Inscricao/g' -e 's/confirmação/confirmacao/g' {})",
+      "Bash(node -e \"const o = require\\(''otplib''\\); console.log\\(Object.keys\\(o\\)\\)\")",
+      "Bash(node -e \"const o = require\\(''otplib''\\); const s = o.generateSecret\\(\\); console.log\\(''secret:'', s\\); console.log\\(''verifySync args:'', o.verifySync.length\\); console.log\\(''TOTP:'', typeof o.TOTP\\)\")",
+      "Bash(node -e \"const {TOTP} = require\\(''otplib''\\); const t = new TOTP\\({secret:''ABC''}\\); console.log\\(Object.getOwnPropertyNames\\(Object.getPrototypeOf\\(t\\)\\).filter\\(m => typeof t[m] === ''function''\\)\\)\")",
+      "Bash(node -e \"const bcrypt = require\\(''bcryptjs''\\); bcrypt.hash\\(''admin123'', 12\\).then\\(h => console.log\\(h\\)\\)\")",
+      "Bash(node -e \"console.log\\(require\\(''crypto''\\).randomBytes\\(32\\).toString\\(''hex''\\)\\)\")",
+      "Bash(node -e \"require\\(''bcryptjs''\\).hash\\(''Intercolonial2026!'', 12\\).then\\(console.log\\)\")",
+      "Bash(gh repo:*)",
+      "Bash(vercel --version)",
+      "Bash(vercel --yes --prod)",
+      "Bash(vercel --yes --prod --name easycup)",
+      "Bash(echo \"$2b$12$.6X/oISm1jIQftRw5tRchuOak5KXmeDiGekRsYwismIA6rwtHOR7m\")",
+      "Bash(vercel env:*)",
+      "Bash(vercel --prod --yes)",
+      "Bash(node -e \"require\\(''bcryptjs''\\).hash\\(''Inter@2026'', 12\\).then\\(console.log\\)\")",
+      "Bash(echo '$2b$12$A22ND.4/.PJn0ARqu9pkBu1i1yaA9N.sCb5f//tJe7hcSs/IL20Jy')"
+    ]
+  }
+}

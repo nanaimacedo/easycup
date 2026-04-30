@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, Trophy, ClipboardList, Lock, Info } from 'lucide-react';
+import { Menu, X, Trophy, ClipboardList, Lock, Info, BookOpen } from 'lucide-react';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,6 +23,7 @@ export default function Header() {
 
           <nav className="hidden md:flex items-center gap-1">
             <NavLink href="/torneio" icon={<Info className="w-4 h-4" />}>Torneio</NavLink>
+            <NavLink href="/regulamento" icon={<BookOpen className="w-4 h-4" />}>Regulamento</NavLink>
             <NavLink href="/inscricao" icon={<ClipboardList className="w-4 h-4" />}>Inscrição</NavLink>
             <NavLink href="/" icon={<Lock className="w-4 h-4" />}>Admin</NavLink>
           </nav>
@@ -40,6 +41,7 @@ export default function Header() {
         <div className="md:hidden border-t border-[var(--color-border)] bg-white animate-slide-up">
           <nav className="px-4 py-3 space-y-1">
             <MobileNavLink href="/torneio" onClick={() => setMenuOpen(false)}>Torneio</MobileNavLink>
+            <MobileNavLink href="/regulamento" onClick={() => setMenuOpen(false)}>Regulamento</MobileNavLink>
             <MobileNavLink href="/inscricao" onClick={() => setMenuOpen(false)}>Inscrição</MobileNavLink>
             <MobileNavLink href="/" onClick={() => setMenuOpen(false)}>Admin</MobileNavLink>
           </nav>
