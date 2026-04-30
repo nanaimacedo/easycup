@@ -42,3 +42,5 @@ desktop.ini
 # misc
 *.pem
 coverage/
+
+.vercel
