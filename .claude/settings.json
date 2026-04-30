@@ -24,7 +24,9 @@
       "Bash(vercel env:*)",
       "Bash(vercel --prod --yes)",
       "Bash(node -e \"require\\(''bcryptjs''\\).hash\\(''Inter@2026'', 12\\).then\\(console.log\\)\")",
-      "Bash(echo '$2b$12$A22ND.4/.PJn0ARqu9pkBu1i1yaA9N.sCb5f//tJe7hcSs/IL20Jy')"
+      "Bash(echo '$2b$12$A22ND.4/.PJn0ARqu9pkBu1i1yaA9N.sCb5f//tJe7hcSs/IL20Jy')",
+      "Bash(supabase --version)",
+      "Bash(npx supabase:*)"
     ]
   }
 }

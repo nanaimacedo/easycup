@@ -9,7 +9,7 @@ import {
   BarChart3, PieChart, Pencil, LogOut,
 } from 'lucide-react';
 import Link from 'next/link';
-import { getInscricoes, atualizarStatus, excluirInscricao } from '@/lib/store';
+import { getInscricoes, atualizarStatus, excluirInscricao, syncFromSupabase } from '@/lib/store';
 import { InscricaoRegistro } from '@/types';
 
 interface DashboardStats {
@@ -135,7 +135,8 @@ export default function DashboardPage() {
       return;
     }
     setAuthed(true);
-    reload();
+    // Sincronizar do Supabase e depois carregar do localStorage
+    syncFromSupabase().then(() => reload()).catch(() => reload());
   }, [router, reload]);
 
   const handleLogout = () => {
