@@ -180,64 +180,104 @@ export default function DashboardPage() {
   };
 
   const exportCSV = () => {
-    const headers = [
-      'Código', 'Modalidade', 'Sexo', 'Categoria', 'Status',
-      'Nome Equipe', 'Capitão', 'Nº', 'Nome do Jogador', 'Data Nascimento',
-      'Telefone', 'E-mail', 'Clube',
-      'Nikkei', 'Professor',
-      'Restrição de Data', 'Detalhe Restrição',
-      'LGPD Consentimento', 'LGPD Imagem',
-      'Valor (R$)', 'Desconto (R$)', 'Valor Final (R$)',
-      'Data Inscrição',
-    ];
-
     const safe = (v: unknown) => {
       if (v === undefined || v === null) return '';
       return String(v).replace(/;/g, ',').replace(/\n/g, ' ');
     };
 
+    // Usa os dados FILTRADOS (pelo filtro de modalidade/status/busca)
+    const dados = inscricoesFiltradas;
+    const modalidadeFiltro = filtroModalidade || 'todos';
+
+    let headers: string[];
     const rows: string[][] = [];
+    let nomeArquivo: string;
 
-    inscricoes.forEach((reg) => {
-      const i = reg.inscricao;
-      const base = [
-        reg.id,
-        i.modalidade,
-        i.modalidade !== 'equipes' ? safe(i.sexo) : '',
-        safe(i.categoria),
-        reg.status,
-      ];
-      const restricao = [i.problemaData ? 'Sim' : 'Não', safe(i.problemaDataDetalhe)];
-      const lgpd = [i.lgpdConsentimento ? 'Sim' : 'Não', i.lgpdImagemConsentimento ? 'Sim' : 'Não'];
-      const valores = [reg.valor.toFixed(2), reg.desconto.toFixed(2), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')];
+    if (modalidadeFiltro === 'equipes') {
+      // Formato agrupado para equipes (como na foto)
+      headers = ['Código', 'Categoria', 'Status', 'NOME DA EQUIPE', 'Capitão', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Nikkei', 'Professor', 'Valor (R$)', 'Data Inscrição'];
+      nomeArquivo = 'equipes';
 
-      if (i.modalidade === 'simples') {
-        rows.push([...base, '', '', '01', safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), '', '', ...restricao, ...lgpd, ...valores]);
-      } else if (i.modalidade === 'duplas') {
-        // Jogador 1 - linha com dados da inscrição
-        rows.push([...base, '', '', '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), '', '', ...restricao, ...lgpd, ...valores]);
-        // Jogador 2 - linha agrupada abaixo
-        rows.push([reg.id, '', '', '', '', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '', '', '', '', '', '', '', '', '']);
-      } else if (i.modalidade === 'equipes') {
+      dados.forEach((reg) => {
+        const i = reg.inscricao;
+        if (i.modalidade !== 'equipes') return;
         const membrosArr = i.membros || [];
-        // Primeira linha com dados da equipe + membro 1
-        const m0 = membrosArr[0];
-        rows.push([...base, safe(i.nomeEquipe), safe(i.capitao), '01',
-          m0 ? safe(m0.nome) : '', m0 ? safe(m0.dataNascimento) : '',
-          m0 ? safe(m0.telefone) : '', m0 ? safe(m0.email) : '', m0 ? safe(m0.clube) : '',
-          m0?.isNikkey ? 'Sim' : 'Não', m0?.isProfessor ? 'Sim' : 'Não',
-          ...restricao, ...lgpd, ...valores]);
-        // Membros 2+ agrupados abaixo
-        for (let j = 1; j < membrosArr.length; j++) {
-          const m = membrosArr[j];
-          rows.push([reg.id, '', '', '', '', safe(i.nomeEquipe), '',
-            String(j + 1).padStart(2, '0'), safe(m.nome), safe(m.dataNascimento),
-            safe(m.telefone), safe(m.email), safe(m.clube),
-            m.isNikkey ? 'Sim' : 'Não', m.isProfessor ? 'Sim' : 'Não',
-            '', '', '', '', '', '', '', '']);
+        membrosArr.forEach((m: { nome: string; dataNascimento: string; telefone: string; email: string; clube: string; isNikkey?: boolean; isProfessor?: boolean }, j: number) => {
+          rows.push([
+            j === 0 ? reg.id : '',
+            j === 0 ? safe(i.categoria) : '',
+            j === 0 ? reg.status : '',
+            j === 0 ? safe(i.nomeEquipe) : '',
+            j === 0 ? safe(i.capitao) : '',
+            String(j + 1).padStart(2, '0'),
+            safe(m.nome),
+            safe(m.dataNascimento),
+            safe(m.telefone),
+            safe(m.email),
+            safe(m.clube),
+            m.isNikkey ? 'Sim' : 'Não',
+            m.isProfessor ? 'Sim' : 'Não',
+            j === 0 ? reg.valorFinal.toFixed(2) : '',
+            j === 0 ? new Date(reg.dataInscricao).toLocaleDateString('pt-BR') : '',
+          ]);
+        });
+        // Linha vazia para separar equipes
+        rows.push(Array(headers.length).fill(''));
+      });
+
+    } else if (modalidadeFiltro === 'duplas') {
+      // Formato agrupado para duplas
+      headers = ['Código', 'Sexo', 'Categoria', 'Status', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Valor (R$)', 'Data Inscrição'];
+      nomeArquivo = 'duplas';
+
+      dados.forEach((reg) => {
+        const i = reg.inscricao;
+        if (i.modalidade !== 'duplas') return;
+        // Jogador 1
+        rows.push([reg.id, safe(i.sexo), safe(i.categoria), reg.status, '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
+        // Jogador 2
+        rows.push(['', '', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '']);
+        rows.push(Array(headers.length).fill(''));
+      });
+
+    } else if (modalidadeFiltro === 'simples') {
+      // Formato simples - uma linha por atleta
+      headers = ['Código', 'Sexo', 'Categoria', 'Status', 'Nome', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Valor (R$)', 'Data Inscrição'];
+      nomeArquivo = 'simples';
+
+      dados.forEach((reg) => {
+        const i = reg.inscricao;
+        if (i.modalidade !== 'simples') return;
+        rows.push([reg.id, safe(i.sexo), safe(i.categoria), reg.status, safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
+      });
+
+    } else {
+      // Todos - formato unificado
+      headers = ['Código', 'Modalidade', 'Sexo', 'Categoria', 'Status', 'Nome Equipe', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Nikkei', 'Professor', 'Valor (R$)', 'Data Inscrição'];
+      nomeArquivo = 'todos';
+
+      dados.forEach((reg) => {
+        const i = reg.inscricao;
+        if (i.modalidade === 'simples') {
+          rows.push([reg.id, 'Simples', safe(i.sexo), safe(i.categoria), reg.status, '', '01', safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), '', '', reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
+        } else if (i.modalidade === 'duplas') {
+          rows.push([reg.id, 'Duplas', safe(i.sexo), safe(i.categoria), reg.status, '', '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), '', '', reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
+          rows.push(['', '', '', '', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '', '', '']);
+        } else if (i.modalidade === 'equipes') {
+          const membrosArr = i.membros || [];
+          membrosArr.forEach((m: { nome: string; dataNascimento: string; telefone: string; email: string; clube: string; isNikkey?: boolean; isProfessor?: boolean }, j: number) => {
+            rows.push([
+              j === 0 ? reg.id : '', j === 0 ? 'Equipes' : '', '', j === 0 ? safe(i.categoria) : '', j === 0 ? reg.status : '',
+              j === 0 ? safe(i.nomeEquipe) : '', String(j + 1).padStart(2, '0'),
+              safe(m.nome), safe(m.dataNascimento), safe(m.telefone), safe(m.email), safe(m.clube),
+              m.isNikkey ? 'Sim' : 'Não', m.isProfessor ? 'Sim' : 'Não',
+              j === 0 ? reg.valorFinal.toFixed(2) : '', j === 0 ? new Date(reg.dataInscricao).toLocaleDateString('pt-BR') : '',
+            ]);
+          });
         }
-      }
-    });
+        rows.push(Array(headers.length).fill(''));
+      });
+    }
 
     const bom = '\uFEFF';
     const csv = bom + [headers, ...rows].map(r => r.join(';')).join('\n');
@@ -245,7 +285,7 @@ export default function DashboardPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `inscricoes_78_intercolonial_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `intercolonial78_${nomeArquivo}_${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
