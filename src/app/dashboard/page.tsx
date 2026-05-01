@@ -182,11 +182,9 @@ export default function DashboardPage() {
   const exportCSV = () => {
     const headers = [
       'Código', 'Modalidade', 'Sexo', 'Categoria', 'Status',
-      'Nome', 'Data Nascimento', 'Endereço', 'Bairro', 'Cidade', 'Estado', 'CEP',
+      'Nome Equipe', 'Capitão', 'Nº', 'Nome do Jogador', 'Data Nascimento',
       'Telefone', 'E-mail', 'Clube',
-      'Nome Jogador 2', 'Data Nasc. Jogador 2', 'Endereço Jogador 2', 'Bairro J2', 'Cidade J2', 'Estado J2', 'CEP J2',
-      'Telefone J2', 'E-mail J2', 'Clube J2',
-      'Nome Equipe', 'Capitão', 'Qtd Membros', 'Membros (Nomes)',
+      'Nikkei', 'Professor',
       'Restrição de Data', 'Detalhe Restrição',
       'LGPD Consentimento', 'LGPD Imagem',
       'Valor (R$)', 'Desconto (R$)', 'Valor Final (R$)',
@@ -195,11 +193,12 @@ export default function DashboardPage() {
 
     const safe = (v: unknown) => {
       if (v === undefined || v === null) return '';
-      const s = String(v).replace(/;/g, ',').replace(/\n/g, ' ');
-      return s;
+      return String(v).replace(/;/g, ',').replace(/\n/g, ' ');
     };
 
-    const rows = inscricoes.map((reg) => {
+    const rows: string[][] = [];
+
+    inscricoes.forEach((reg) => {
       const i = reg.inscricao;
       const base = [
         reg.id,
@@ -208,49 +207,39 @@ export default function DashboardPage() {
         safe(i.categoria),
         reg.status,
       ];
-
-      let pessoais: string[] = [];
-      let jogador2: string[] = [];
-      let equipe: string[] = [];
+      const restricao = [i.problemaData ? 'Sim' : 'Não', safe(i.problemaDataDetalhe)];
+      const lgpd = [i.lgpdConsentimento ? 'Sim' : 'Não', i.lgpdImagemConsentimento ? 'Sim' : 'Não'];
+      const valores = [reg.valor.toFixed(2), reg.desconto.toFixed(2), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')];
 
       if (i.modalidade === 'simples') {
-        pessoais = [safe(i.nome), safe(i.dataNascimento), safe(i.endereco), safe(i.bairro), safe(i.cidade), safe(i.estado), safe(i.cep), safe(i.telefone), safe(i.email), safe(i.clube)];
-        jogador2 = ['', '', '', '', '', '', '', '', '', ''];
-        equipe = ['', '', '', ''];
+        rows.push([...base, '', '', '01', safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), '', '', ...restricao, ...lgpd, ...valores]);
       } else if (i.modalidade === 'duplas') {
-        const j1 = i.jogador1;
-        const j2 = i.jogador2;
-        pessoais = [safe(j1.nome), safe(j1.dataNascimento), safe(j1.endereco), safe(j1.bairro), safe(j1.cidade), safe(j1.estado), safe(j1.cep), safe(j1.telefone), safe(j1.email), safe(j1.clube)];
-        jogador2 = [safe(j2.nome), safe(j2.dataNascimento), safe(j2.endereco), safe(j2.bairro), safe(j2.cidade), safe(j2.estado), safe(j2.cep), safe(j2.telefone), safe(j2.email), safe(j2.clube)];
-        equipe = ['', '', '', ''];
+        // Jogador 1 - linha com dados da inscrição
+        rows.push([...base, '', '', '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), '', '', ...restricao, ...lgpd, ...valores]);
+        // Jogador 2 - linha agrupada abaixo
+        rows.push([reg.id, '', '', '', '', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '', '', '', '', '', '', '', '', '']);
       } else if (i.modalidade === 'equipes') {
-        pessoais = ['', '', '', '', '', '', '', '', '', ''];
-        jogador2 = ['', '', '', '', '', '', '', '', '', ''];
-        const nomesMembros = i.membros?.map((m: { nome: string }) => m.nome).join(' | ') || '';
-        equipe = [safe(i.nomeEquipe), safe(i.capitao), String(i.membros?.length || 0), nomesMembros];
+        const membrosArr = i.membros || [];
+        // Primeira linha com dados da equipe + membro 1
+        const m0 = membrosArr[0];
+        rows.push([...base, safe(i.nomeEquipe), safe(i.capitao), '01',
+          m0 ? safe(m0.nome) : '', m0 ? safe(m0.dataNascimento) : '',
+          m0 ? safe(m0.telefone) : '', m0 ? safe(m0.email) : '', m0 ? safe(m0.clube) : '',
+          m0?.isNikkey ? 'Sim' : 'Não', m0?.isProfessor ? 'Sim' : 'Não',
+          ...restricao, ...lgpd, ...valores]);
+        // Membros 2+ agrupados abaixo
+        for (let j = 1; j < membrosArr.length; j++) {
+          const m = membrosArr[j];
+          rows.push([reg.id, '', '', '', '', safe(i.nomeEquipe), '',
+            String(j + 1).padStart(2, '0'), safe(m.nome), safe(m.dataNascimento),
+            safe(m.telefone), safe(m.email), safe(m.clube),
+            m.isNikkey ? 'Sim' : 'Não', m.isProfessor ? 'Sim' : 'Não',
+            '', '', '', '', '', '', '', '']);
+        }
       }
-
-      const restricao = [
-        i.problemaData ? 'Sim' : 'Não',
-        safe(i.problemaDataDetalhe),
-      ];
-
-      const lgpd = [
-        i.lgpdConsentimento ? 'Sim' : 'Não',
-        i.lgpdImagemConsentimento ? 'Sim' : 'Não',
-      ];
-
-      const valores = [
-        reg.valor.toFixed(2),
-        reg.desconto.toFixed(2),
-        reg.valorFinal.toFixed(2),
-        new Date(reg.dataInscricao).toLocaleDateString('pt-BR'),
-      ];
-
-      return [...base, ...pessoais, ...jogador2, ...equipe, ...restricao, ...lgpd, ...valores];
     });
 
-    const bom = '\uFEFF'; // BOM para Excel reconhecer UTF-8
+    const bom = '\uFEFF';
     const csv = bom + [headers, ...rows].map(r => r.join(';')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
