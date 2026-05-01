@@ -31,17 +31,17 @@ export default function Home() {
 
       {/* Hero com Banner */}
       <section className="relative text-white overflow-hidden bg-[#1a3a5c]">
-        <div className="max-w-5xl mx-auto">
+        <div className="w-full">
           <Image
             src="/banner-intercolonial.jpeg"
             alt="78º Intercolonial de Tênis 2026"
-            width={1200}
-            height={600}
+            width={1919}
+            height={489}
             className="w-full h-auto"
             priority
           />
         </div>
-        <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] py-8 sm:py-10">
+        <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] py-6 sm:py-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center">
               <p className="text-base sm:text-lg text-blue-100 max-w-2xl mx-auto mb-6">
