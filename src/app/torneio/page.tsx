@@ -75,7 +75,7 @@ export default function Home() {
       </section>
 
       {/* Info Cards */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 -mt-8 relative z-10 mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-8 mb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <InfoCard icon={<Calendar className="w-5 h-5" />} title="Datas do Torneio" color="blue">
             <p className="text-xs">{TORNEIO.dataInicio1}</p>
