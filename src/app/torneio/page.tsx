@@ -29,25 +29,21 @@ export default function Home() {
         />
       )}
 
-      {/* Hero com Banner */}
-      <section className="relative text-white overflow-hidden bg-[#1a3a5c]">
-        <div className="w-full">
-          <Image
-            src="/banner-intercolonial.jpeg"
-            alt="78º Intercolonial de Tênis 2026"
-            width={1919}
-            height={489}
-            className="w-full h-auto"
-            priority
-          />
-        </div>
+      {/* Banner + Hero */}
+      <section className="text-white">
+        <Image
+          src="/banner-intercolonial.jpeg"
+          alt="78º Intercolonial de Tênis 2026"
+          width={1919}
+          height={489}
+          className="w-full h-auto"
+          priority
+        />
         <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] py-6 sm:py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="text-center">
-              <p className="text-base sm:text-lg text-blue-100 max-w-2xl mx-auto mb-6">
-                {TORNEIO.clube} - O maior torneio de tênis da comunidade nikkei
-              </p>
-
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+            <p className="text-base sm:text-lg text-blue-100 max-w-2xl mx-auto mb-6">
+              {TORNEIO.clube} - O maior torneio de tênis da comunidade nikkei
+            </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {lgpdAccepted ? (
                 <Link
@@ -68,14 +64,13 @@ export default function Home() {
               )}
               <Link
                 href="/regulamento"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-2xl border border-white/30 hover:bg-white/30 transition-all text-lg"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-2xl border border-white/20 hover:bg-white/20 transition-all text-lg"
               >
                 <Users className="w-5 h-5" />
                 Ver Regulamento
               </Link>
             </div>
           </div>
-        </div>
         </div>
       </section>
 
