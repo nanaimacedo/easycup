@@ -511,7 +511,7 @@ export default function DashboardPage() {
                           </td>
                           <td className="px-4 py-3">
                             <div className="flex items-center justify-center gap-1">
-                              {inscricao.modalidade === 'equipes' && (
+                              {(inscricao.modalidade === 'equipes' || inscricao.modalidade === 'duplas') && (
                                 <Link
                                   href={`/inscricao/editar?id=${reg.id}`}
                                   title="Editar Jogadores"

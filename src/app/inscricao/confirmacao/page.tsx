@@ -122,14 +122,14 @@ function ConfirmacaoContent() {
         </div>
       </div>
 
-      {/* Edit button for equipes */}
-      {inscricao.modalidade === 'equipes' && podeEditar() && (
+      {/* Edit button for duplas/equipes */}
+      {(inscricao.modalidade === 'equipes' || inscricao.modalidade === 'duplas') && podeEditar() && (
         <div className="mt-4">
           <Link
             href={`/inscricao/editar?id=${registro.id}`}
             className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-sm font-semibold hover:bg-amber-100 transition-colors"
           >
-            <Pencil className="w-4 h-4" /> Editar Jogadores da Equipe
+            <Pencil className="w-4 h-4" /> Editar Jogadores
           </Link>
         </div>
       )}
