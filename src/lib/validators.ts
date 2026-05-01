@@ -3,11 +3,6 @@ import { z } from 'zod';
 const atletaSchema = z.object({
   nome: z.string().min(3, 'Nome deve ter ao menos 3 caracteres'),
   dataNascimento: z.string().min(1, 'Data de nascimento é obrigatória'),
-  endereco: z.string().min(3, 'Endereço é obrigatório'),
-  bairro: z.string().min(2, 'Bairro é obrigatório'),
-  cidade: z.string().min(2, 'Cidade é obrigatória'),
-  estado: z.string().min(2, 'Estado é obrigatório'),
-  cep: z.string().min(8, 'CEP é obrigatório'),
   telefone: z.string().min(10, 'Telefone é obrigatório'),
   email: z.string().email('E-mail inválido'),
   clube: z.string().min(2, 'Clube é obrigatório'),

@@ -8,7 +8,7 @@ import { ArrowLeft, Send, Info } from 'lucide-react';
 import Link from 'next/link';
 import FormField, { Input, Select, Checkbox } from '@/components/FormField';
 import { simplesSchema, SimplesFormData } from '@/lib/validators';
-import { CATEGORIAS_SIMPLES, ESTADOS_BR } from '@/lib/constants';
+import { CATEGORIAS_SIMPLES } from '@/lib/constants';
 import { salvarInscricao, calcularPreco } from '@/lib/store';
 
 export default function SimplesPage() {
@@ -102,28 +102,6 @@ export default function SimplesPage() {
               </FormField>
               <FormField label="Data de nascimento" error={errors.dataNascimento} required>
                 <Input type="date" {...register('dataNascimento')} hasError={!!errors.dataNascimento} />
-              </FormField>
-            </div>
-
-            <FormField label="Endereço" error={errors.endereco} required>
-              <Input {...register('endereco')} placeholder="Rua, número, complemento" hasError={!!errors.endereco} />
-            </FormField>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <FormField label="Bairro" error={errors.bairro} required>
-                <Input {...register('bairro')} placeholder="Bairro" hasError={!!errors.bairro} />
-              </FormField>
-              <FormField label="Cidade" error={errors.cidade} required>
-                <Input {...register('cidade')} placeholder="Cidade" hasError={!!errors.cidade} />
-              </FormField>
-              <FormField label="Estado" error={errors.estado} required>
-                <Select {...register('estado')} hasError={!!errors.estado}>
-                  <option value="">UF</option>
-                  {ESTADOS_BR.map(uf => <option key={uf} value={uf}>{uf}</option>)}
-                </Select>
-              </FormField>
-              <FormField label="CEP" error={errors.cep} required>
-                <Input {...register('cep')} placeholder="00000-000" hasError={!!errors.cep} />
               </FormField>
             </div>
 

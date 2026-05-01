@@ -30,20 +30,23 @@ export default function Home() {
       )}
 
       {/* Hero com Banner */}
-      <section className="relative text-white overflow-hidden">
-        <Image
-          src="/banner-intercolonial.jpeg"
-          alt="78º Intercolonial de Tênis 2026"
-          fill
-          className="object-cover object-center"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
-          <div className="text-center">
-            <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8 drop-shadow-lg">
-              {TORNEIO.clube} - O maior torneio de tênis da comunidade nikkei
-            </p>
+      <section className="relative text-white overflow-hidden bg-[#1a3a5c]">
+        <div className="max-w-5xl mx-auto">
+          <Image
+            src="/banner-intercolonial.jpeg"
+            alt="78º Intercolonial de Tênis 2026"
+            width={1200}
+            height={600}
+            className="w-full h-auto"
+            priority
+          />
+        </div>
+        <div className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-dark)] py-8 sm:py-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="text-center">
+              <p className="text-base sm:text-lg text-blue-100 max-w-2xl mx-auto mb-6">
+                {TORNEIO.clube} - O maior torneio de tênis da comunidade nikkei
+              </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {lgpdAccepted ? (
@@ -72,6 +75,7 @@ export default function Home() {
               </Link>
             </div>
           </div>
+        </div>
         </div>
       </section>
 

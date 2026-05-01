@@ -8,7 +8,7 @@ import { ArrowLeft, Send, Info, User } from 'lucide-react';
 import Link from 'next/link';
 import FormField, { Input, Select, Checkbox } from '@/components/FormField';
 import { duplasSchema, DuplasFormData } from '@/lib/validators';
-import { CATEGORIAS_DUPLAS, ESTADOS_BR } from '@/lib/constants';
+import { CATEGORIAS_DUPLAS } from '@/lib/constants';
 import { salvarInscricao } from '@/lib/store';
 
 function AtletaFields({ prefix, register, errors }: { prefix: 'jogador1' | 'jogador2'; register: ReturnType<typeof useForm<DuplasFormData>>['register']; errors: Record<string, Record<string, { message?: string }>> }) {
@@ -21,26 +21,6 @@ function AtletaFields({ prefix, register, errors }: { prefix: 'jogador1' | 'joga
         </FormField>
         <FormField label="Data de nascimento" error={e.dataNascimento as never} required>
           <Input type="date" {...register(`${prefix}.dataNascimento`)} hasError={!!e.dataNascimento} />
-        </FormField>
-      </div>
-      <FormField label="Endereço" error={e.endereco as never} required>
-        <Input {...register(`${prefix}.endereco`)} placeholder="Rua, número, complemento" hasError={!!e.endereco} />
-      </FormField>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <FormField label="Bairro" error={e.bairro as never} required>
-          <Input {...register(`${prefix}.bairro`)} placeholder="Bairro" hasError={!!e.bairro} />
-        </FormField>
-        <FormField label="Cidade" error={e.cidade as never} required>
-          <Input {...register(`${prefix}.cidade`)} placeholder="Cidade" hasError={!!e.cidade} />
-        </FormField>
-        <FormField label="Estado" error={e.estado as never} required>
-          <Select {...register(`${prefix}.estado`)} hasError={!!e.estado}>
-            <option value="">UF</option>
-            {ESTADOS_BR.map(uf => <option key={uf} value={uf}>{uf}</option>)}
-          </Select>
-        </FormField>
-        <FormField label="CEP" error={e.cep as never} required>
-          <Input {...register(`${prefix}.cep`)} placeholder="00000-000" hasError={!!e.cep} />
         </FormField>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
