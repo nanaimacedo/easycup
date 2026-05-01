@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Trophy, Users, UserPlus, Calendar, MapPin, Phone, Mail, Award, Clock, Shield } from 'lucide-react';
 import LgpdModal from '@/components/LgpdModal';
 import { TORNEIO, PREMIACAO_ESPECIAL } from '@/lib/constants';
@@ -28,25 +29,19 @@ export default function Home() {
         />
       )}
 
-      {/* Hero */}
-      <section className="relative bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary-dark)] to-blue-950 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-20 w-96 h-96 bg-blue-300 rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      {/* Hero com Banner */}
+      <section className="relative text-white overflow-hidden">
+        <Image
+          src="/banner-intercolonial.jpeg"
+          alt="78º Intercolonial de Tênis 2026"
+          fill
+          className="object-cover object-center"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-28">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6">
-              <Trophy className="w-4 h-4 text-amber-300" />
-              <span className="text-sm font-medium text-blue-100">78ª Edição - 2026</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
-              Campeonato<br />
-              <span className="bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent">
-                Intercolonial de Tênis
-              </span>
-            </h1>
-            <p className="text-lg text-blue-200 max-w-2xl mx-auto mb-8">
+            <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-8 drop-shadow-lg">
               {TORNEIO.clube} - O maior torneio de tênis da comunidade nikkei
             </p>
 
@@ -70,7 +65,7 @@ export default function Home() {
               )}
               <Link
                 href="/regulamento"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-2xl border border-white/20 hover:bg-white/20 transition-all text-lg"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-2xl border border-white/30 hover:bg-white/30 transition-all text-lg"
               >
                 <Users className="w-5 h-5" />
                 Ver Regulamento
