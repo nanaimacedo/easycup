@@ -195,7 +195,7 @@ export default function DashboardPage() {
 
     if (modalidadeFiltro === 'equipes') {
       // Formato agrupado para equipes (como na foto)
-      headers = ['Código', 'Categoria', 'Status', 'NOME DA EQUIPE', 'Capitão', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Nikkei', 'Professor', 'Valor (R$)', 'Data Inscrição'];
+      headers = ['Categoria', 'Status', 'NOME DA EQUIPE', 'Capitão', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Nikkei', 'Professor', 'Valor (R$)', 'Data Inscrição', 'Código'];
       nomeArquivo = 'equipes';
 
       dados.forEach((reg) => {
@@ -204,7 +204,6 @@ export default function DashboardPage() {
         const membrosArr = i.membros || [];
         membrosArr.forEach((m: { nome: string; dataNascimento: string; telefone: string; email: string; clube: string; isNikkey?: boolean; isProfessor?: boolean }, j: number) => {
           rows.push([
-            j === 0 ? reg.id : '',
             j === 0 ? safe(i.categoria) : '',
             j === 0 ? reg.status : '',
             j === 0 ? safe(i.nomeEquipe) : '',
@@ -219,6 +218,7 @@ export default function DashboardPage() {
             m.isProfessor ? 'Sim' : 'Não',
             j === 0 ? reg.valorFinal.toFixed(2) : '',
             j === 0 ? new Date(reg.dataInscricao).toLocaleDateString('pt-BR') : '',
+            j === 0 ? reg.id : '',
           ]);
         });
         // Linha vazia para separar equipes
@@ -227,51 +227,48 @@ export default function DashboardPage() {
 
     } else if (modalidadeFiltro === 'duplas') {
       // Formato agrupado para duplas
-      headers = ['Código', 'Sexo', 'Categoria', 'Status', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Valor (R$)', 'Data Inscrição'];
+      headers = ['Sexo', 'Categoria', 'Status', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Valor (R$)', 'Data Inscrição', 'Código'];
       nomeArquivo = 'duplas';
 
       dados.forEach((reg) => {
         const i = reg.inscricao;
         if (i.modalidade !== 'duplas') return;
-        // Jogador 1
-        rows.push([reg.id, safe(i.sexo), safe(i.categoria), reg.status, '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
-        // Jogador 2
-        rows.push(['', '', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '']);
+        rows.push([safe(i.sexo), safe(i.categoria), reg.status, '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR'), reg.id]);
+        rows.push(['', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '', '']);
         rows.push(Array(headers.length).fill(''));
       });
 
     } else if (modalidadeFiltro === 'simples') {
-      // Formato simples - uma linha por atleta
-      headers = ['Código', 'Sexo', 'Categoria', 'Status', 'Nome', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Valor (R$)', 'Data Inscrição'];
+      headers = ['Sexo', 'Categoria', 'Status', 'Nome', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Valor (R$)', 'Data Inscrição', 'Código'];
       nomeArquivo = 'simples';
 
       dados.forEach((reg) => {
         const i = reg.inscricao;
         if (i.modalidade !== 'simples') return;
-        rows.push([reg.id, safe(i.sexo), safe(i.categoria), reg.status, safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
+        rows.push([safe(i.sexo), safe(i.categoria), reg.status, safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR'), reg.id]);
       });
 
     } else {
       // Todos - formato unificado
-      headers = ['Código', 'Modalidade', 'Sexo', 'Categoria', 'Status', 'Nome Equipe', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Nikkei', 'Professor', 'Valor (R$)', 'Data Inscrição'];
+      headers = ['Modalidade', 'Sexo / Equipe', 'Categoria', 'Status', 'Nº', 'Nome do Jogador', 'Data Nasc.', 'Telefone', 'E-mail', 'Clube', 'Nikkei', 'Professor', 'Valor (R$)', 'Data Inscrição', 'Código'];
       nomeArquivo = 'todos';
 
       dados.forEach((reg) => {
         const i = reg.inscricao;
         if (i.modalidade === 'simples') {
-          rows.push([reg.id, 'Simples', safe(i.sexo), safe(i.categoria), reg.status, '', '01', safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), '', '', reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
+          rows.push(['Simples', safe(i.sexo), safe(i.categoria), reg.status, '01', safe(i.nome), safe(i.dataNascimento), safe(i.telefone), safe(i.email), safe(i.clube), '', '', reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR'), reg.id]);
         } else if (i.modalidade === 'duplas') {
-          rows.push([reg.id, 'Duplas', safe(i.sexo), safe(i.categoria), reg.status, '', '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), '', '', reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR')]);
-          rows.push(['', '', '', '', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '', '', '']);
+          rows.push(['Duplas', safe(i.sexo), safe(i.categoria), reg.status, '01', safe(i.jogador1.nome), safe(i.jogador1.dataNascimento), safe(i.jogador1.telefone), safe(i.jogador1.email), safe(i.jogador1.clube), '', '', reg.valorFinal.toFixed(2), new Date(reg.dataInscricao).toLocaleDateString('pt-BR'), reg.id]);
+          rows.push(['', '', '', '', '02', safe(i.jogador2.nome), safe(i.jogador2.dataNascimento), safe(i.jogador2.telefone), safe(i.jogador2.email), safe(i.jogador2.clube), '', '', '', '', '']);
         } else if (i.modalidade === 'equipes') {
           const membrosArr = i.membros || [];
           membrosArr.forEach((m: { nome: string; dataNascimento: string; telefone: string; email: string; clube: string; isNikkey?: boolean; isProfessor?: boolean }, j: number) => {
             rows.push([
-              j === 0 ? reg.id : '', j === 0 ? 'Equipes' : '', '', j === 0 ? safe(i.categoria) : '', j === 0 ? reg.status : '',
-              j === 0 ? safe(i.nomeEquipe) : '', String(j + 1).padStart(2, '0'),
+              j === 0 ? 'Equipes' : '', j === 0 ? safe(i.nomeEquipe) : '', j === 0 ? safe(i.categoria) : '', j === 0 ? reg.status : '',
+              String(j + 1).padStart(2, '0'),
               safe(m.nome), safe(m.dataNascimento), safe(m.telefone), safe(m.email), safe(m.clube),
               m.isNikkey ? 'Sim' : 'Não', m.isProfessor ? 'Sim' : 'Não',
-              j === 0 ? reg.valorFinal.toFixed(2) : '', j === 0 ? new Date(reg.dataInscricao).toLocaleDateString('pt-BR') : '',
+              j === 0 ? reg.valorFinal.toFixed(2) : '', j === 0 ? new Date(reg.dataInscricao).toLocaleDateString('pt-BR') : '', j === 0 ? reg.id : '',
             ]);
           });
         }
